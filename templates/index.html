@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Attendance</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Smart Attendance System</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <p>Today: {{ today }}</p>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Employees</h3>
+                <p>{{ employee_count }}</p>
+            </div>
+        </div>
+
+        <form action="/mark" method="post">
+            <input type="text" name="name" placeholder="Employee Name" required>
+            <button type="submit">Mark Attendance</button>
+        </form>
+
+        <h2>Today's Records</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Time</th>
+            </tr>
+            {% for record in records %}
+            <tr>
+                <td>{{ record.name }}</td>
+                <td>{{ record.time }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+        <nav>
+            <a href="/add_employee">Add Employee</a>
+            <a href="/employees">View All Employees</a>
+        </nav>
+    </div>
+</body>
+</html>
